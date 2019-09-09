@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+from sklearn.linear_model import LinearRegression
 
 df=pd.read_csv('/Users/jashan/Desktop/Development/ML/Boston-Housing-EDA/0304/housing.Data',delim_whitespace=True, header=None)
 # print(df.describe())
@@ -34,9 +35,39 @@ pd.options.display.float_format='{:,.2f}'.format
 #     13. LSTAT    % lower status of the population
 #     14. MEDV     Median value of owner-occupied homes in $1000's
 
-# sns.pairplot(df[col_study],height=2)
-# plt.show()
+sns.pairplot(df[col_study],height=2) 
+plt.show()
 print(df[col_study].corr())
 plt.figure(figsize=(16,10))
-sns.heatmap(df[col_study].corr(),annot=True)
+sns.heatmap(df.corr(),annot=True)
 plt.show()
+
+# X=df['RM'].values.reshape(-1,1)
+# y=df['MEDV']
+# model=LinearRegression(fit_intercept=True)
+# #print(model)
+# model.fit(X,y)
+# print(model.coef_)
+# print(model.intercept_)
+# plt.figure(figsize=(10,8))
+# sns.regplot(X,y,color='r')
+# plt.xlabel('Average number of rooms per dewelling')
+# plt.ylabel('Median value of owner-occupied homes in $1000 s')
+# plt.show()
+
+
+
+X=df['LSTAT'].values.reshape(-1,1)
+y=df['MEDV']
+
+model=LinearRegression(fit_intercept=True)
+model.fit(X,y)
+print(model.coef_)
+print(model.intercept_)
+plt.figure(figsize=(10,8))
+sns.regplot(X,y,color='g')
+plt.ylabel('Median value of owner-occupied homes in $1000 s')
+plt.xlabel(' percentage of lower status of the population')
+plt.show()
+
+
